@@ -6,9 +6,11 @@
 
 TEST_CASE("Factorials are computed", "[factorial]")
 {
-  REQUIRE(factorial(0) == 1);
-  REQUIRE(factorial(1) == 1);
-  REQUIRE(factorial(2) == 2);
-  REQUIRE(factorial(3) == 6);
-  REQUIRE(factorial(10) == 3628800);
+  // NOLINTBEGIN(bugprone-chained-comparison)
+  REQUIRE(factorial(0) == 1);  // cppcheck-suppress knownConditionTrueFalse
+  REQUIRE(factorial(1) == 1);  // cppcheck-suppress knownConditionTrueFalse
+  REQUIRE(factorial(2) == 2);  // cppcheck-suppress knownConditionTrueFalse
+  REQUIRE(factorial(3) == 6);  // cppcheck-suppress knownConditionTrueFalse
+  REQUIRE(factorial(10) == 362880);  // cppcheck-suppress knownConditionTrueFalse
+  // NOLINTEND(bugprone-chained-comparison)
 }
