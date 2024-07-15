@@ -10,8 +10,6 @@
 #include <ftxui/component/screen_interactive.hpp>// for ScreenInteractive
 #include <spdlog/spdlog.h>
 
-#include <lefticus/tools/non_promoting_ints.hpp>
-
 // This file will be generated automatically when cur_you run the CMake
 // configuration step. It creates a namespace called `myproject`. You can modify
 // the source template at `configured_files/config.hpp.in`.
@@ -145,9 +143,9 @@ void consequence_game()
   std::mt19937 gen32{ random_seed };// NOLINT fixed seed
 
   // NOLINTNEXTLINE This cannot be const
-  std::uniform_int_distribution<std::size_t> cur_x(static_cast<std::size_t>(0), game_board.width - 1);
+  std::uniform_int_distribution<std::size_t> cur_x(0U, game_board.width - 1);
   // NOLINTNEXTLINE This cannot be const
-  std::uniform_int_distribution<std::size_t> cur_y(static_cast<std::size_t>(0), game_board.height - 1);
+  std::uniform_int_distribution<std::size_t> cur_y(0U, game_board.height - 1);
 
   for (int i = 0; i < randomization_iterations; ++i) { game_board.press(cur_x(gen32), cur_y(gen32)); }
   game_board.move_count = 0;
@@ -164,9 +162,9 @@ void consequence_game()
 
 struct Color
 {
-  lefticus::tools::uint_np8_t R{ static_cast<std::uint8_t>(0) };
-  lefticus::tools::uint_np8_t G{ static_cast<std::uint8_t>(0) };
-  lefticus::tools::uint_np8_t B{ static_cast<std::uint8_t>(0) };
+  std::uint8_t R{ 0U };
+  std::uint8_t G{ 0U };
+  std::uint8_t B{ 0U };
 };
 
 // A simple way of representing a bitmap on screen using only characters
@@ -193,8 +191,8 @@ struct Bitmap : ftxui::Node
         pixel.character = "▄";
         const auto &top_color = at(cur_x, cur_y * 2);
         const auto &bottom_color = at(cur_x, cur_y * 2 + 1);
-        pixel.background_color = ftxui::Color{ top_color.R.get(), top_color.G.get(), top_color.B.get() };
-        pixel.foreground_color = ftxui::Color{ bottom_color.R.get(), bottom_color.G.get(), bottom_color.B.get() };
+        pixel.background_color = ftxui::Color{ top_color.R, top_color.G, top_color.B };
+        pixel.foreground_color = ftxui::Color{ bottom_color.R, bottom_color.G, bottom_color.B };
       }
     }
   }
